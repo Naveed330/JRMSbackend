@@ -37,7 +37,7 @@ userRouter.post(
     '/register',
     uploadToCloudinary, isAuth, isSuperAdmin,
     expressAsyncHandler(async (req, res) => {
-      const { name, email, password, role, contact, nationality, emid } = req.body;
+      const { name, email, password, role, contact, othercontact, address, nationality, emid } = req.body;
   
       // Ensure that a picture was uploaded
       if (!req.file) {
@@ -55,6 +55,8 @@ userRouter.post(
           picture,
           role,
           contact,
+          othercontact,
+          address,
           nationality,
           emid,
         });
@@ -68,6 +70,8 @@ userRouter.post(
           role: user.role,
           picture: user.picture,
           contact: user.contact,
+          othercontact: user.othercontact,
+          address : user.address,
           nationality: user.nationality,
           emid: user.emid,
           token: generateToken(user),
@@ -265,6 +269,16 @@ userRouter.get(
     '/allusers',
     isAuth,
     isSuperAdmin,
+    expressAsyncHandler(async (req, res) => {
+        const users = await User.find({});
+        res.send(users);
+    })
+);
+
+userRouter.get(
+    '/allusersforadmin',
+    isAuth,
+    isAdmin,
     expressAsyncHandler(async (req, res) => {
         const users = await User.find({});
         res.send(users);

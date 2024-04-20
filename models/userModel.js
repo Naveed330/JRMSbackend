@@ -12,6 +12,8 @@ const userSchema = new mongoose.Schema(
     },
     picture: { type: String, required: true },
     contact: { type: String },
+    othercontact:{ type: String},
+    address : {type: String},
     nationality: { type: String },
     emid: { type: String },
 

@@ -9,7 +9,7 @@ const tenantSchema = new Schema({
     email: {
         type: String,
     },
-   contact : String ,
+    contact: String,
     nid: String,
     licenseno: String,
     companyname: String,
@@ -28,10 +28,10 @@ const tenantSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Floor'
     },
-    unitId: {
+    unitId: [{
         type: Schema.Types.ObjectId,
         ref: 'Unit'
-    }, 
+    }],  // Change to an array of ObjectId
     propertyType: {
         type: String,
         enum: ['apartments'],
@@ -47,14 +47,13 @@ const tenantSchema = new Schema({
         numberofoccupants: String,
         Waterandelecbill: {
             type: String,
-            enum: ['owner', 'tenant'] 
+            enum: ['owner', 'tenant']
         },
-        pet: Boolean, 
+        pet: Boolean,
         usage: {
             type: String,
-            enum: ['commercial', 'residential'] 
+            enum: ['commercial', 'residential']
         },
-
         monthsDuration: {
             type: Number,
             required: true
@@ -100,7 +99,11 @@ const tenantSchema = new Schema({
         enum: ['Active', 'Inactive'],
         default: 'Active'
     },
-}, { timestamps: true }); 
+    contractNo: {
+        type: String,
+        unique: true,
+    },
+}, { timestamps: true });
 
 const Tenant = mongoose.model('Tenant', tenantSchema);
 

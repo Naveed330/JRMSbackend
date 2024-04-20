@@ -9,6 +9,8 @@ import userRouter from "./routes/userRoutes.js";
 import testRouter from './routes/testRoutes.js'
 import propertyRouter from "./routes/propertyRoutes.js";
 import tenantRouter from "./routes/tenantRoutes.js";
+import maintenanceRouter from "./routes/maintenanceRoutes.js";
+import administrationfeeRouter from "./routes/administrationfeesRoutes.js";
 
 // Load environment variables
 dotenv.config();
@@ -42,8 +44,18 @@ app.use('/api/test', testRouter);
 app.use('/api/users', userRouter);
 app.use('/api/properties', propertyRouter);
 app.use('/api/tenants', tenantRouter);
+app.use('/api/maintenance', maintenanceRouter);
+app.use('/api/adminstrationfees', administrationfeeRouter);
 
 
+// Serve static assets if in production
+if (process.env.NODE_ENV === 'production') {
+  const __dirname = path.resolve();
+  app.use(express.static(path.join(__dirname, './client/build')));
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, './client/build/index.html'));
+  });
+}
 
 
 // Start the server
